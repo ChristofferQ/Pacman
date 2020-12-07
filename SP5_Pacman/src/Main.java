@@ -6,6 +6,7 @@ public class Main extends PApplet
     public void settings()
     {
         size(800,800);
+        background(0);
     }
 
     public void setup()
@@ -15,7 +16,7 @@ public class Main extends PApplet
 
     public void draw()
     {
-        background(0);
+
     }
 
     public static void main(String[] args)
