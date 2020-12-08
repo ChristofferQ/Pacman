@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 
-public class Cell extends PApplet {
+public class Cell{
     float x;
     float y;
     float w;
@@ -13,9 +13,9 @@ public class Cell extends PApplet {
         this.h = h;
     }
 
-    public void display(){
-        stroke(0);
-        fill(255);
-        rect(x,y,w,h);
+    public void display(PApplet p){
+        p.stroke(0);
+        p.fill(255);
+        p.rect(x,y,w,h);
     }
 }
