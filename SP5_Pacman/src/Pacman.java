@@ -5,6 +5,7 @@ public class Pacman extends PApplet {
     Board board;
 
 
+
     public void settings(){
         size(600,800);
 

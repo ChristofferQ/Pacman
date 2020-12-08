@@ -3,7 +3,6 @@ import processing.core.PApplet;
 public class Board {
 
     PApplet p;
-
     Cell[][] grid;
     int cols = 28;
     int rows = 36;
@@ -36,5 +35,6 @@ public class Board {
             }
         }
     }
+
 
 }
