@@ -85,17 +85,10 @@ public class Pacman extends PApplet
 
     public void draw()
     {
-        for (int i = 0; i < 28; i++)
-        {
-            for (int j = 0; j < 31; j++)
-            {
-                //tiles[j][i].showFood(p);
-            }
-        }
-
         image(img, 0, 0);
         this.showPacman(p);
         this.movePacman(p);
+        this.showFood(p);
     }
 
 
@@ -146,6 +139,9 @@ public class Pacman extends PApplet
         fill(255, 255, 0);
         noStroke();
         ellipse(pos.x, pos.y, 3, 3);
+        System.out.println("x = " + pos.x + " " + "y = " + pos.y);
+
+        //Problemet opstår i at maden kun bliver vist på Pacmans plads. Læg mærke til sout
     }
 
 
