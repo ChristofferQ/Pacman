@@ -85,7 +85,7 @@ public class Pacman extends PApplet
 
     public void draw()
     {
-        for (int i = 0; i< 28; i++)
+        for (int i = 0; i < 28; i++)
         {
             for (int j = 0; j < 31; j++)
             {
@@ -149,40 +149,40 @@ public class Pacman extends PApplet
     }
 
 
-            public boolean checkPosition()
+    public boolean checkPosition()
+    {
+
+        if ((pos.x - 8) % 16 == 0 && (pos.y - 8) % 16 == 0)
+        {
+
+            PVector matrixPosition = new PVector((pos.x - 8) / 16, (pos.y - 8) / 16);
+            PVector positionToCheck = new PVector(matrixPosition.x + turnTo.x, matrixPosition.y + turnTo.y);
+
+            if (tiles[floor(positionToCheck.y)][floor(positionToCheck.x)].wall)
             {
-
-                if ((pos.x - 8) % 16 == 0 && (pos.y - 8) % 16 == 0)
+                if (tiles[floor(matrixPosition.y + vel.y)][floor(matrixPosition.x + vel.x)].wall)
                 {
-
-                    PVector matrixPosition = new PVector((pos.x - 8) / 16, (pos.y - 8) / 16);
-                    PVector positionToCheck = new PVector(matrixPosition.x + turnTo.x, matrixPosition.y + turnTo.y);
-
-                    if (tiles[floor(positionToCheck.y)][floor(positionToCheck.x)].wall)
-                    {
-                        if (tiles[floor(matrixPosition.y + vel.y)][floor(matrixPosition.x + vel.x)].wall)
-                        {
-                            return false;
-                        } else
-                        {
-                            return true;
-                        }
-                    } else
-                    {
-                        vel = new PVector(turnTo.x, turnTo.y);
-                        return true;
-                    }
+                    return false;
                 } else
                 {
-                    if ((pos.x + 10 * vel.x - 8) % 16 == 0 && (pos.y + 10 * vel.y - 8) % 16 == 0)
-                    {
-                    }
-                }
-                if (turnTo.x + vel.x == 0 && vel.y + turnTo.y == 0)
-                {
-                    vel = new PVector(turnTo.x, turnTo.y);
                     return true;
                 }
+            } else
+            {
+                vel = new PVector(turnTo.x, turnTo.y);
                 return true;
             }
+        } else
+        {
+            if ((pos.x + 10 * vel.x - 8) % 16 == 0 && (pos.y + 10 * vel.y - 8) % 16 == 0)
+            {
+            }
         }
+        if (turnTo.x + vel.x == 0 && vel.y + turnTo.y == 0)
+        {
+            vel = new PVector(turnTo.x, turnTo.y);
+            return true;
+        }
+        return true;
+    }
+}
