@@ -2,12 +2,13 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class Main extends PApplet
+public class Main
 {
     public static void main(String[] args)
     {
-        String[] proccessing = {"Main"};
-        Pacman mySketch = new Pacman();
-        PApplet.runSketch(proccessing, mySketch);
+            PApplet p = new PApplet();
+            String[] processingArgs = {"Main"};
+            Pacman mySketch = new Pacman();
+            PApplet.runSketch(processingArgs, mySketch);
     }
 }
