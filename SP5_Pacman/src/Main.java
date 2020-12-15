@@ -1,6 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PVector;
 
 public class Main
 {

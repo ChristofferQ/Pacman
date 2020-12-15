@@ -10,6 +10,8 @@ public class Pacman extends PApplet
     PVector vel = new PVector(-1, 0);
     PVector turnTo = new PVector(-1, 0);
     boolean turn = false;
+    boolean eaten = false;
+    boolean dot = false;
     PImage img;
 
     public Pacman()
@@ -70,13 +72,10 @@ public class Pacman extends PApplet
                 switch (tilesRepresentation[j][i])
                 {
                     case 0:
-                        tiles[j][i].food = true;
+                        tiles[j][i].dot = true;
                         break;
                     case 1:
                         tiles[j][i].wall = true;
-                        break;
-                    case 2:
-                        tiles[j][i].dot = true;
                         break;
                 }
             }
@@ -86,8 +85,8 @@ public class Pacman extends PApplet
     public void draw()
     {
         image(img, 0, 0);
-        this.showPacman(p);
         this.movePacman(p);
+        this.showPacman(p);
         this.showFood(p);
     }
 
@@ -119,13 +118,6 @@ public class Pacman extends PApplet
         }
     }
 
-    public void showPacman(PApplet p)
-    {
-        fill(255, 255, 0);
-        stroke(255, 255, 0);
-        ellipse(pos.x, pos.y, 20, 20);
-    }
-
     public void movePacman(PApplet p)
     {
         if (checkPosition())
@@ -134,16 +126,40 @@ public class Pacman extends PApplet
         }
     }
 
-    public void showFood(PApplet p)
+    public void showPacman(PApplet p)
     {
         fill(255, 255, 0);
-        noStroke();
-        ellipse(pos.x, pos.y, 3, 3);
-        System.out.println("x = " + pos.x + " " + "y = " + pos.y);
-
-        //Problemet opstår i at maden kun bliver vist på Pacmans plads. Læg mærke til sout
+        stroke(255, 255, 0);
+        ellipse(pos.x, pos.y, 20, 20);
     }
 
+    public void showFood(PApplet p)
+    {
+        for (int i = 0; i < 28; i++)
+        {
+            for (int j = 0; j < 31; j++)
+            {
+
+                if (tilesRepresentation[j][i] == 0 || tilesRepresentation[j][i] == 6)
+                {
+                    if (!eaten)
+                    {
+                        //draw small dot
+                        fill(255, 255, 0);
+                        noStroke();
+                        ellipse(i * 16 + 8, j * 16 + 8, 5, 5);
+                    }
+                } else if (tilesRepresentation[j][i] == 8)
+                {
+                    if (!eaten)
+                        //draw big dot
+                        fill(102, 0, 204);
+                        noStroke();
+                        ellipse(i * 16 + 8, j * 16 + 8, 14, 14);
+                }
+            }
+        }
+    }
 
     public boolean checkPosition()
     {
@@ -156,22 +172,20 @@ public class Pacman extends PApplet
 
             if (tiles[floor(positionToCheck.y)][floor(positionToCheck.x)].wall)
             {
-                if (tiles[floor(matrixPosition.y + vel.y)][floor(matrixPosition.x + vel.x)].wall)
-                {
-                    return false;
-                } else
-                {
-                    return true;
-                }
+                return !tiles[floor(matrixPosition.y + vel.y)][floor(matrixPosition.x + vel.x)].wall;
+
+            } else if
+            ((pos.x+10*vel.x-8)%16 == 0 && (pos.y + 10*vel.y - 8)% 16 ==0)
+            {
+                    if (!tiles[floor(matrixPosition.y)][floor(matrixPosition.x)].eaten )
+                    {
+                        tiles[floor(matrixPosition.y)][floor(matrixPosition.x)].eaten = true;
+                    }
+
             } else
             {
                 vel = new PVector(turnTo.x, turnTo.y);
                 return true;
-            }
-        } else
-        {
-            if ((pos.x + 10 * vel.x - 8) % 16 == 0 && (pos.y + 10 * vel.y - 8) % 16 == 0)
-            {
             }
         }
         if (turnTo.x + vel.x == 0 && vel.y + turnTo.y == 0)

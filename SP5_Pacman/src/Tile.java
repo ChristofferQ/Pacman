@@ -1,15 +1,14 @@
-import processing.core.PApplet;
 import processing.core.PVector;
 
-public class Tile extends PApplet
+public class Tile
 {
         boolean wall = false;
         boolean dot = false;
-        boolean food = false;
         boolean eaten = false;
         PVector pos;
 
-        Tile(float x, float y) {
-            pos = new PVector(x, y);
+        Tile(float x, float y)
+        {
+                pos = new PVector(x, y);
         }
 }
