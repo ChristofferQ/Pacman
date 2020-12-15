@@ -1,18 +1,18 @@
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class Pacman extends PApplet
 {
     PApplet p = new PApplet();
-
     PVector pos;
     PVector vel = new PVector(-1, 0);
     PVector turnTo = new PVector(-1, 0);
     boolean turn = false;
-    boolean eaten = false;
-    boolean dot = false;
     PImage img;
+    int score;
+    PFont font;
 
     public Pacman()
     {
@@ -57,12 +57,15 @@ public class Pacman extends PApplet
     public void setup()
     {
         frameRate(100);
+        font = createFont("Arial", 16, true);
+        textFont(font, 16);
     }
 
     public void settings()
     {
         size(448, 496);
         img = loadImage("map.jpg");
+
 
         for (int i = 0; i < 28; i++)
         {
@@ -85,11 +88,13 @@ public class Pacman extends PApplet
     public void draw()
     {
         image(img, 0, 0);
+        fill(255);
+        textAlign(CENTER);
+        text("Points: " + score, width/2, height/2);
         this.movePacman(p);
         this.showPacman(p);
         this.showFood(p);
     }
-
 
     public void keyPressed()
     {
@@ -142,7 +147,7 @@ public class Pacman extends PApplet
 
                 if (tilesRepresentation[j][i] == 0 || tilesRepresentation[j][i] == 6)
                 {
-                    if (!eaten)
+                    if (!tiles[j][i].eaten)
                     {
                         //draw small dot
                         fill(255, 255, 0);
@@ -151,7 +156,7 @@ public class Pacman extends PApplet
                     }
                 } else if (tilesRepresentation[j][i] == 8)
                 {
-                    if (!eaten)
+                    if (!tiles[j][i].eaten)
                         //draw big dot
                         fill(102, 0, 204);
                         noStroke();
@@ -163,11 +168,17 @@ public class Pacman extends PApplet
 
     public boolean checkPosition()
     {
-
         if ((pos.x - 8) % 16 == 0 && (pos.y - 8) % 16 == 0)
         {
 
             PVector matrixPosition = new PVector((pos.x - 8) / 16, (pos.y - 8) / 16);
+
+            if (!tiles[floor(matrixPosition.y)][floor(matrixPosition.x)].eaten)
+            {
+                tiles[floor(matrixPosition.y)][floor(matrixPosition.x)].eaten = true;
+                score += 10;
+            }
+
             PVector positionToCheck = new PVector(matrixPosition.x + turnTo.x, matrixPosition.y + turnTo.y);
 
             if (tiles[floor(positionToCheck.y)][floor(positionToCheck.x)].wall)

@@ -4,6 +4,7 @@ public class Tile
 {
         boolean wall = false;
         boolean dot = false;
+        boolean bigDot = false;
         boolean eaten = false;
         PVector pos;
 
